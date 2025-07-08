@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Minhas Inscrições</title>
+  <style>
+    .back-button {
+      margin-bottom: 1rem;
+    }
+  </style>
+</h:head>
+
+<h:body>
+
+  <h:form id="formMinhasInscricoes">
+
+    <p:commandButton value="Voltar à Área do Aluno"
+                     action="aluno.xhtml?faces-redirect=true"
+                     icon="pi pi-arrow-left"
+                     styleClass="back-button ui-button-secondary"/>
+
+    <h2>Minhas Inscrições</h2>
+
+    <p:dataTable id="TbMinhasAvaliacoes"
+                 value="#{avaliacaoBean.minhasAvaliacoes}"
+                 var="avaliacao"
+                 rows="10"
+                 paginator="true"
+                 paginatorPosition="bottom"
+                 emptyMessage="Você ainda não possui inscrições.">
+
+      <p:column headerText="Monitoria">
+        <h:outputText value="#{avaliacao.monitoria.titulo}"/>
+      </p:column>
+
+      <p:column headerText="Descrição">
+        <h:outputText value="#{avaliacao.monitoria.descricao}"/>
+      </p:column>
+
+      <p:column headerText="Nota">
+        <p:inputNumber value="#{avaliacaoBean.avaliacao.nota}" decimalPlaces="1" minValue="0" maxValue="10"/>
+      </p:column>
+
+      <p:column headerText="Ação">
+        <p:commandButton value="Avaliar"
+                         icon="pi pi-check"
+                         action="#{avaliacaoBean.salvarAvaliacao(avaliacao.monitoria)}"
+                         update=":formMinhasInscricoes:TbMinhasAvaliacoes"
+                         styleClass="ui-button-success"/>
+      </p:column>
+    </p:dataTable>
+
+  </h:form>
+
+</h:body>
+</html>

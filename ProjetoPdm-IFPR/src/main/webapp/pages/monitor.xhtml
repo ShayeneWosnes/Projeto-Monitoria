@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Área do Monitor</title>
+
+    <style>
+        .avatar-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-right: 1rem;
+        }
+
+        .logout-button {
+            background-color: #007ad9;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .welcome-panel {
+            margin: 1rem;
+        }
+    </style>
+
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <!-- Menu horizontal -->
+        <p:megaMenu orientation="horizontal">
+            <p:menuitem value="Início" url="#{request.contextPath}/pages/monitor.xhtml" icon="pi pi-home" />
+            <f:facet name="end">
+                <div class="avatar-container">
+                    <p:avatar size="large" shape="circle">
+                        <p:graphicImage value="../img/ftPerfil-monitor.jpg" />
+                    </p:avatar>
+                    <p:commandButton value="Logout" action="#{loginBean.logout}" icon="pi pi-sign-out"
+                                     styleClass="logout-button ui-button-danger" />
+                </div>
+            </f:facet>
+        </p:megaMenu>
+    </h:form>
+
+    <p:growl id="mensagens" />
+
+    <h:form id="formPrincipal">
+        <p:panel class="welcome-panel">
+            <h3>Olá, <strong>#{monitorBean.usuarioLogado.nome}</strong>!</h3>
+            <p>Veja abaixo suas monitorias e eventos inscritos.</p>
+        </p:panel>
+    </h:form>
+
+    <h:form id="formMonitorias">
+        <p:panel header="Minhas Monitorias" style="margin: 1rem;">
+            <p:dataTable value="#{monitorBean.monitoriasInscritas}"
+                         var="monitoria"
+                         paginator="true"
+                         rows="5"
+                         paginatorPosition="bottom"
+                         emptyMessage="Você não está inscrito em nenhuma monitoria."
+                         responsiveLayout="scroll">
+
+                <p:column headerText="Título">
+                    <h:outputText value="#{monitoria.titulo}" />
+                </p:column>
+
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{monitoria.descricao}" />
+                </p:column>
+
+                <p:column headerText="Data/Hora">
+                    <h:outputText value="#{monitoria.dataHora}" />
+                </p:column>
+
+                <p:column headerText="Local">
+                    <h:outputText value="#{monitoria.local}" />
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+
+    <h:form id="formEventos">
+        <p:panel header="Meus Eventos" style="margin: 1rem;">
+            <p:dataTable value="#{monitorBean.eventosParticipando}"
+                         var="evento"
+                         paginator="true"
+                         rows="5"
+                         paginatorPosition="bottom"
+                         emptyMessage="Você não está inscrito em nenhum evento."
+                         responsiveLayout="scroll">
+
+                <p:column headerText="Título">
+                    <h:outputText value="#{evento.titulo}" />
+                </p:column>
+
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{evento.descricao}" />
+                </p:column>
+
+                <p:column headerText="Data">
+                    <h:outputText value="#{evento.data}" />
+                </p:column>
+
+                <p:column headerText="Local">
+                    <h:outputText value="#{evento.local}" />
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+
+</h:body>
+</html>
